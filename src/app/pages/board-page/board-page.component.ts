@@ -37,6 +37,15 @@ const board = [
   [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
 ]
 
+// 4. piece
+const piece = {
+  position: { x: 5, y: 5 },
+  shape: [
+    [1, 1],
+    [1, 1]
+  ]
+}
+
 @Component({
   selector: 'app-board-page',
   templateUrl: './board-page.component.html',
@@ -58,6 +67,8 @@ export class BoardPageComponent implements AfterViewInit {
       this.canvas.nativeElement.width = BLOCK_SIZE * BOARD_WIDTH;
       this.canvas.nativeElement.height = BLOCK_SIZE * BOARD_HEIGHT;
       this.context.scale(BLOCK_SIZE, BLOCK_SIZE);
+      this.context.fillStyle = '#000';
+      this.context.fillRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
       requestAnimationFrame(() => this.update());
     } else {
       console.error('2D context not supported');
@@ -72,14 +83,19 @@ export class BoardPageComponent implements AfterViewInit {
 
   draw(): void {
     if (this.context) {
-      this.context.fillStyle = '#000';
-      this.context.fillRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+
       board.forEach((row, y) => {
         row.forEach((value, x) => {
           if (value === 1) {
             this.context!.fillStyle = 'yellow'
             this.context!.fillRect(x, y, 1, 1)
           }
+        })
+      })
+      
+      piece.shape.forEach((row, y) => {
+        row.forEach((value, x) => {
+
         })
       })
     }
