@@ -54,7 +54,7 @@ const piece = {
 export class BoardPageComponent implements AfterViewInit {
   @ViewChild('myCanvas', { static: true })
   public canvas: ElementRef<HTMLCanvasElement>;
-  private context?: CanvasRenderingContext2D;
+  private context!: CanvasRenderingContext2D;
 
   constructor() {
     this.canvas = {} as ElementRef<HTMLCanvasElement>;
@@ -92,10 +92,13 @@ export class BoardPageComponent implements AfterViewInit {
           }
         })
       })
-      
+
       piece.shape.forEach((row, y) => {
         row.forEach((value, x) => {
-
+          if(value){
+            this.context.fillStyle='red';
+            this.context.fillRect(x+piece.position.x, y+piece.position.y,1,1);
+          }
         })
       })
     }
