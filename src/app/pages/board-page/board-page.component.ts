@@ -65,6 +65,8 @@ export class BoardPageComponent implements AfterViewInit {
   @ViewChild('myCanvas', { static: true })
   public canvas: ElementRef<HTMLCanvasElement>;
   private context!: CanvasRenderingContext2D;
+  public dropCounter: number = 0;
+  public lastTime: number = 0;
 
   constructor() {
     this.canvas = {} as ElementRef<HTMLCanvasElement>;
@@ -85,9 +87,16 @@ export class BoardPageComponent implements AfterViewInit {
   }
 
   //2. game loop
-  update(): void {
+  update(time: number = 0): void {
+    const deltaTime = time - this.lastTime;
+    this.lastTime = time;
+    this.dropCounter += deltaTime;
+    if (this.dropCounter > 1000) {
+      piece.position.y++;
+      this.dropCounter = 0;
+    }
     this.draw();
-    requestAnimationFrame(() => this.update());
+    requestAnimationFrame((time) => this.update(time));
   }
 
   draw(): void {
@@ -189,4 +198,18 @@ export class BoardPageComponent implements AfterViewInit {
     })
 
   }
+
+
+
+  update2(time = 0) {
+    const deltaTime = time - this.lastTime;
+    this.lastTime = time;
+    this.dropCounter += deltaTime;
+    if (this.dropCounter > 1000) {
+      piece.position.y++;
+    }
+    this.draw()
+    requestAnimationFrame(() => this.update2());
+  }
+
 }
