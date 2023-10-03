@@ -4,6 +4,16 @@ const BLOCK_SIZE: number = 20;
 const BOARD_WIDTH: number = 14;
 const BOARD_HEIGHT: number = 30;
 
+interface Position {
+  x: number;
+  y: number;
+}
+
+interface Piece {
+  position: Position;
+  shape: number[][];
+}
+
 const board = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -38,7 +48,7 @@ const board = [
 ]
 
 // 4. piece
-const piece = {
+const piece: Piece = {
   position: { x: 5, y: 5 },
   shape: [
     [1, 1],
@@ -117,19 +127,19 @@ export class BoardPageComponent implements AfterViewInit {
     switch (event.key) {
       case 'ArrowLeft':
         piece.position.x--;
-        if (this.checkCollisions()) {
+        if (this.checkCollisions(piece)) {
           piece.position.x++;
         }
         break;
       case 'ArrowRight':
         piece.position.x++;
-        if (this.checkCollisions()) {
+        if (this.checkCollisions(piece)) {
           piece.position.x--;
         }
         break;
       case 'ArrowDown':
         piece.position.y++;
-        if (this.checkCollisions()) {
+        if (this.checkCollisions(piece)) {
           piece.position.y--;
         }
         break;
@@ -139,11 +149,11 @@ export class BoardPageComponent implements AfterViewInit {
   }
 
 
-  checkCollisions() {
+  checkCollisions(piece: Piece) {
     return piece.shape.find((row, y) => {
       return row.find((value, x) => {
         return (
-          value !== 0 &&          
+          value !== 0 &&
           board[y + piece.position.y]?.[x + piece.position.x] !== 0
         )
       })
