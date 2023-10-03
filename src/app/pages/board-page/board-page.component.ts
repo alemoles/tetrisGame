@@ -160,4 +160,14 @@ export class BoardPageComponent implements AfterViewInit {
     })
   }
 
+  solidifyPiece(piece: Piece) {
+    piece.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value === 1) {
+          board[y + piece.position.y][x + piece.position.x] = 1
+        }
+      })
+    })
+  }
+
 }
