@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 const BLOCK_SIZE: number = 20;
 const BOARD_WIDTH: number = 14;
@@ -67,8 +67,7 @@ export class BoardPageComponent implements AfterViewInit {
       this.canvas.nativeElement.width = BLOCK_SIZE * BOARD_WIDTH;
       this.canvas.nativeElement.height = BLOCK_SIZE * BOARD_HEIGHT;
       this.context.scale(BLOCK_SIZE, BLOCK_SIZE);
-      this.context.fillStyle = '#000';
-      this.context.fillRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+
       requestAnimationFrame(() => this.update());
     } else {
       console.error('2D context not supported');
@@ -83,6 +82,8 @@ export class BoardPageComponent implements AfterViewInit {
 
   draw(): void {
     if (this.context) {
+      this.context.fillStyle = '#000';
+      this.context.fillRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
 
       board.forEach((row, y) => {
         row.forEach((value, x) => {
@@ -95,13 +96,58 @@ export class BoardPageComponent implements AfterViewInit {
 
       piece.shape.forEach((row, y) => {
         row.forEach((value, x) => {
-          if(value){
-            this.context.fillStyle='red';
-            this.context.fillRect(x+piece.position.x, y+piece.position.y,1,1);
+          if (value) {
+            this.context.fillStyle = 'red';
+            this.context.fillRect(x + piece.position.x, y + piece.position.y, 1, 1);
           }
         })
       })
     }
+  }
+  /**
+   * 
+   * Since the update method is already being 
+   * called continuously due to the requestAnimationFrame loop, 
+   * you don't need to call this.update() again within the onKeydown method. 
+   * Every time piece position changes, the next call to update (and thus draw)
+   *  will reflect those changes.
+   */
+  @HostListener('window:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    switch (event.key) {
+      case 'ArrowLeft':
+        piece.position.x--;
+        if (this.checkCollisions()) {
+          piece.position.x++;
+        }
+        break;
+      case 'ArrowRight':
+        piece.position.x++;
+        if (this.checkCollisions()) {
+          piece.position.x--;
+        }
+        break;
+      case 'ArrowDown':
+        piece.position.y++;
+        if (this.checkCollisions()) {
+          piece.position.y--;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  checkCollisions() {
+    return piece.shape.find((row, y) => {
+      return row.find((value, x) => {
+        return (
+          value !== 0 &&          
+          board[y + piece.position.y]?.[x + piece.position.x] !== 0
+        )
+      })
+    })
   }
 
 }
