@@ -141,6 +141,8 @@ export class BoardPageComponent implements AfterViewInit {
         piece.position.y++;
         if (this.checkCollisions(piece)) {
           piece.position.y--;
+          this.solidifyPiece(piece);
+          this.removeRows();
         }
         break;
       default:
@@ -168,6 +170,23 @@ export class BoardPageComponent implements AfterViewInit {
         }
       })
     })
+    piece.position.x = 0
+    piece.position.y = 0
   }
 
+  removeRows() {
+    const rowsToRemove: number[] = []
+    board.forEach((row, y) => {
+      if (row.every(value => value === 1)) {
+        rowsToRemove.push(y);
+      }
+    })
+
+    rowsToRemove.forEach(row => {
+      board.splice(row, 1)
+      const newRow = Array(BOARD_WIDTH).fill(0);
+      board.unshift(newRow);
+    })
+
+  }
 }
