@@ -94,6 +94,11 @@ export class BoardPageComponent implements AfterViewInit {
     if (this.dropCounter > 1000) {
       piece.position.y++;
       this.dropCounter = 0;
+      if (this.checkCollisions(piece)) {
+        piece.position.y--;
+        this.solidifyPiece(piece);
+        this.removeRows();
+      }
     }
     this.draw();
     requestAnimationFrame((time) => this.update(time));
