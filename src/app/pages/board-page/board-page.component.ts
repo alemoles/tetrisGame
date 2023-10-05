@@ -67,7 +67,7 @@ const PIECES = [
   ],
   [
     [1, 1, 0],
-    [1, 1, 1]
+    [0, 1, 1]
   ],
   [
     [1, 1, 0],
@@ -208,6 +208,9 @@ export class BoardPageComponent implements AfterViewInit {
         }
       })
     })
+    // get random shape
+    piece.shape = PIECES[Math.floor(Math.random() * PIECES.length)]
+    //reset position
     piece.position.x = 0
     piece.position.y = 0
   }
