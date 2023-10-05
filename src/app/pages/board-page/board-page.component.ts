@@ -211,7 +211,7 @@ export class BoardPageComponent implements AfterViewInit {
     // get random shape
     piece.shape = PIECES[Math.floor(Math.random() * PIECES.length)]
     //reset position
-    piece.position.x = 0
+    piece.position.x = Math.floor(BOARD_WIDTH / 2 - 2)
     piece.position.y = 0
   }
 
