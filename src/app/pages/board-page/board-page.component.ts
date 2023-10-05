@@ -213,6 +213,12 @@ export class BoardPageComponent implements AfterViewInit {
     //reset position
     piece.position.x = Math.floor(BOARD_WIDTH / 2 - 2)
     piece.position.y = 0
+
+    // gameover
+    if (this.checkCollisions(piece)) {
+      window.alert('Game over !! Sorry');
+      board.forEach((row) => row.fill(0));
+    }
   }
 
   removeRows() {
