@@ -230,18 +230,4 @@ export class BoardPageComponent implements AfterViewInit {
     })
 
   }
-
-
-
-  update2(time = 0) {
-    const deltaTime = time - this.lastTime;
-    this.lastTime = time;
-    this.dropCounter += deltaTime;
-    if (this.dropCounter > 1000) {
-      piece.position.y++;
-    }
-    this.draw()
-    requestAnimationFrame(() => this.update2());
-  }
-
 }
