@@ -80,6 +80,8 @@ const PIECES = [
   ],
 ]
 
+
+
 @Component({
   selector: 'app-board-page',
   templateUrl: './board-page.component.html',
@@ -91,6 +93,7 @@ export class BoardPageComponent implements AfterViewInit {
   private context!: CanvasRenderingContext2D;
   public dropCounter: number = 0;
   public lastTime: number = 0;
+  public score: number = 0;
 
   constructor() {
     this.canvas = {} as ElementRef<HTMLCanvasElement>;
@@ -252,6 +255,8 @@ export class BoardPageComponent implements AfterViewInit {
       const newRow = Array(BOARD_WIDTH).fill(0);
       board.unshift(newRow);
     })
-
+    if (rowsToRemove.length > 0) {
+      this.score += 10;
+    }
   }
 }
