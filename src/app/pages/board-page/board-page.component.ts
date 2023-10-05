@@ -56,6 +56,30 @@ const piece: Piece = {
   ]
 }
 
+// 9. random pieces
+const PIECES = [
+  [
+    [1, 1],
+    [1, 1]
+  ],
+  [
+    [1, 1, 1, 1],
+  ],
+  [
+    [1, 1, 0],
+    [1, 1, 1]
+  ],
+  [
+    [1, 1, 0],
+    [0, 1, 1]
+  ],
+  [
+    [1, 0],
+    [1, 0],
+    [1, 1]
+  ],
+]
+
 @Component({
   selector: 'app-board-page',
   templateUrl: './board-page.component.html',
