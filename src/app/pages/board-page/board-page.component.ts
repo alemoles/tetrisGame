@@ -183,6 +183,24 @@ export class BoardPageComponent implements AfterViewInit {
           this.removeRows();
         }
         break;
+      // Rotate piece
+      case 'ArrowUp':
+        // todo: improve rotate method to large pieces on the right 
+        // side of the board
+        const rotated: number[][] = [];
+        for (let index = 0; index < piece.shape[0].length; index++) {
+          const row: number[] = [];
+          for (let j = piece.shape.length - 1; j >= 0; j--) {
+            row.push(piece.shape[j][index]);
+          }
+          rotated.push(row);
+        }
+        const previousShape = piece.shape;
+        piece.shape = rotated;
+        if (this.checkCollisions(piece)) {
+          piece.shape = previousShape;
+        }
+        break;
       default:
         break;
     }
