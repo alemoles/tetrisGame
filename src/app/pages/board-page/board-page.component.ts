@@ -1,10 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { CONSTANTS } from 'src/app/constants';
 
-// const BLOCK_SIZE: number = 20;
-// const BOARD_WIDTH: number = 14;
-// const BOARD_HEIGHT: number = 30;
-
 interface Position {
   x: number;
   y: number;
