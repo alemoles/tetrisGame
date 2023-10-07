@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { CONSTANTS } from 'src/app/constants';
+import { CONSTANTS, EVENT_MOVEMENTS } from 'src/app/constants';
 
 interface Position {
   x: number;
@@ -141,19 +141,19 @@ export class BoardPageComponent implements AfterViewInit {
   @HostListener('window:keydown', ['$event'])
   onKeydown(event: KeyboardEvent): void {
     switch (event.key) {
-      case 'ArrowLeft':
+      case EVENT_MOVEMENTS.LEFT:
         piece.position.x--;
         if (this.checkCollisions(piece)) {
           piece.position.x++;
         }
         break;
-      case 'ArrowRight':
+      case EVENT_MOVEMENTS.RIGHT:
         piece.position.x++;
         if (this.checkCollisions(piece)) {
           piece.position.x--;
         }
         break;
-      case 'ArrowDown':
+      case EVENT_MOVEMENTS.DOWN:
         piece.position.y++;
         if (this.checkCollisions(piece)) {
           piece.position.y--;
@@ -162,7 +162,7 @@ export class BoardPageComponent implements AfterViewInit {
         }
         break;
       // Rotate piece
-      case 'ArrowUp':
+      case EVENT_MOVEMENTS.UP:
         // todo: improve rotate method to large pieces on the right 
         // side of the board
         const rotated: number[][] = [];

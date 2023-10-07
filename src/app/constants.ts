@@ -3,3 +3,10 @@ export const CONSTANTS = {
     BOARD_WIDTH: 14,
     BOARD_HEIGHT: 30,
 }
+
+export const EVENT_MOVEMENTS = {
+    LEFT: 'ArrowLeft',
+    DOWN: 'ArrowDown',
+    RIGHT: 'ArrowRight',
+    UP: 'ArrowUp',
+}
