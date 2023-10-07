@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { CONSTANTS, EVENT_MOVEMENTS } from 'src/app/constants';
 
 interface Position {
@@ -56,7 +56,7 @@ const PIECES = [
   templateUrl: './board-page.component.html',
   styleUrls: ['./board-page.component.css']
 })
-export class BoardPageComponent implements AfterViewInit {
+export class BoardPageComponent implements AfterViewInit, OnInit {
   @ViewChild('myCanvas', { static: true })
   public canvas: ElementRef<HTMLCanvasElement>;
   private context!: CanvasRenderingContext2D;
@@ -64,10 +64,23 @@ export class BoardPageComponent implements AfterViewInit {
   public lastTime: number = 0;
   public score: number = 0;
   public board: number[][] = [[]];
+  audio = new Audio();
 
   constructor() {
     this.canvas = {} as ElementRef<HTMLCanvasElement>;
     this.board = this.createBoard(CONSTANTS.BOARD_WIDTH, CONSTANTS.BOARD_HEIGHT);
+  }
+
+  ngOnInit() {
+    this.playAudio();
+  }
+
+  playAudio() {
+    this.audio.src = 'assets/tetris.mp3';
+    this.audio.load();
+    this.audio.play();
+    this.audio.loop = true;
+    this.audio.volume = 0.2;
   }
 
   ngAfterViewInit(): void {
