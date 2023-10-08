@@ -14,6 +14,20 @@
   -webkit-text-size-adjust: 100%;
 }
 
+@font-face {
+  font-family: 'Arcade In';
+  src: url('assets/fonts/8-bit-arcade-in.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Arcade Out';
+  src: url('assets/fonts/8-bit-arcade-out.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
   padding: 0;
