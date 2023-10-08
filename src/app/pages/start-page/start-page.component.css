@@ -1,0 +1,18 @@
+a {
+  font-family: "Arcade In";
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 68px;
+  color: white;
+}
+
+a:hover {
+  font-size: 84px;
+}
+
+a:active {
+    color: rgb(191, 191, 191);
+}
