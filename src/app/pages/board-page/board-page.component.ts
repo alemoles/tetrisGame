@@ -86,18 +86,11 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.stopAudio();
   }
 
   canDeactivate(): boolean {
     return window.confirm("Do you really want to leave? Changes may not be saved.");
-  }
-
-  playAudio() {
-    this.audio.src = 'assets/tetris.mp3';
-    this.audio.load();
-    this.audio.play();
-    this.audio.loop = true;
-    this.audio.volume = 0.2;
   }
 
   ngAfterViewInit(): void {
@@ -112,6 +105,19 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
     } else {
       console.error('2D context not supported');
     }
+  }
+
+  playAudio() {
+    this.audio.src = 'assets/tetris.mp3';
+    this.audio.load();
+    this.audio.play();
+    this.audio.loop = true;
+    this.audio.volume = 0.2;
+  }
+
+  stopAudio() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
   }
 
   createBoard(width: number, height: number): number[][] {
