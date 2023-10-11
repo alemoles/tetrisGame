@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { CONSTANTS, EVENT_MOVEMENTS } from 'src/app/constants';
+import { CanComponentDeactivate } from 'src/app/guards/can-deactivate.guard';
 
 interface Position {
   x: number;
@@ -56,7 +58,7 @@ const PIECES = [
   templateUrl: './board-page.component.html',
   styleUrls: ['./board-page.component.css']
 })
-export class BoardPageComponent implements AfterViewInit, OnInit {
+export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDeactivate, OnDestroy {
   @ViewChild('myCanvas', { static: true })
   public canvas: ElementRef<HTMLCanvasElement>;
   private context!: CanvasRenderingContext2D;
@@ -66,6 +68,8 @@ export class BoardPageComponent implements AfterViewInit, OnInit {
   public board: number[][] = [[]];
   audio = new Audio();
 
+  private subscription: Subscription = new Subscription;
+
   constructor() {
     this.canvas = {} as ElementRef<HTMLCanvasElement>;
     this.board = this.createBoard(CONSTANTS.BOARD_WIDTH, CONSTANTS.BOARD_HEIGHT);
@@ -73,6 +77,19 @@ export class BoardPageComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.playAudio();
+    this.subscription = fromEvent(window, 'beforeunload').subscribe(event => {
+      if (!this.canDeactivate()) {
+        event.preventDefault();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  canDeactivate(): boolean {
+    return window.confirm("Do you really want to leave? Changes may not be saved.");
   }
 
   playAudio() {

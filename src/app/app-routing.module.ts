@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { BoardPageComponent } from './pages/board-page/board-page.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       {
         path: 'board',
         component: BoardPageComponent,
+        canDeactivate: [CanDeactivateGuard]
 
       },
       {
