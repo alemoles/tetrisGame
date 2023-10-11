@@ -53,6 +53,7 @@ const PIECES = [
 
 
 
+
 @Component({
   selector: 'app-board-page',
   templateUrl: './board-page.component.html',
@@ -69,6 +70,15 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
   audio = new Audio();
 
   private subscription: Subscription = new Subscription;
+  private blockPattern: CanvasPattern | null = null;
+
+  // SVG Data URL
+  private svgDataURL = 'data:image/svg+xml;base64,' + btoa(`
+   <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+       <rect x="0" y="0" width="100" height="100" fill="#FF4500" rx="20" ry="20" />
+       <rect x="20" y="20" width="60" height="60" fill="#000000" />
+   </svg>
+ `);
 
   constructor() {
     this.canvas = {} as ElementRef<HTMLCanvasElement>;
@@ -100,6 +110,11 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
       this.canvas.nativeElement.width = CONSTANTS.BLOCK_SIZE * CONSTANTS.BOARD_WIDTH;
       this.canvas.nativeElement.height = CONSTANTS.BLOCK_SIZE * CONSTANTS.BOARD_HEIGHT;
       this.context.scale(CONSTANTS.BLOCK_SIZE, CONSTANTS.BLOCK_SIZE);
+      const svgImage = new Image();
+      svgImage.src = this.svgDataURL;
+      svgImage.onload = () => {
+        this.blockPattern = this.context.createPattern(svgImage, 'no-repeat');
+      };
 
       requestAnimationFrame(() => this.update());
     } else {
@@ -143,8 +158,9 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
   }
 
   draw(): void {
+    if(!this.blockPattern)return;
     if (this.context) {
-      this.context.fillStyle = '#000';
+      this.context.fillStyle = '#111';
       this.context.fillRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
 
       this.board.forEach((row, y) => {
@@ -156,10 +172,12 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
         })
       })
 
+      // shapes
       piece.shape.forEach((row, y) => {
         row.forEach((value, x) => {
           if (value) {
-            this.context.fillStyle = 'red';
+            this.context.fillStyle='red';
+            // this.context.fillStyle = this.blockPattern as CanvasPattern;
             this.context.fillRect(x + piece.position.x, y + piece.position.y, 1, 1);
           }
         })
