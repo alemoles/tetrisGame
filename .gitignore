@@ -43,4 +43,4 @@ Thumbs.db
 concept.png
 concept-1.png
 TASK.md
-data/db.json
+data/*
