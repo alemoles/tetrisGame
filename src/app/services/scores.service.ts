@@ -13,10 +13,10 @@ export class ScoresService implements OnInit {
     constructor(private httpClient: HttpClient) { }
 
     ngOnInit(): void {
-        this.loadInitialScores();
+        this.loadScores();
     }
 
-    private loadInitialScores(): void {
+    private loadScores(): void {
         this.getScores().subscribe(scores => {
             this._scores = scores.sort((a, b) => b.score - a.score).slice(0, 10);
         });
@@ -27,12 +27,22 @@ export class ScoresService implements OnInit {
     }
 
     public addScore(score: number, name: string): Observable<Score> {
-
         const newScore = {
             "username": name,
             "score": score
         }
         return this.httpClient.post<Score>(`${this.baseUrl}/scores`, newScore);
+    }
+
+    public canAddScore(score: number): boolean {
+        if (score === 0 || score < this.lowestScore) {
+            return false;
+        }
+        return true;
+    }
+
+    public updateScores() {
+        this.loadScores();
     }
 
     get scores(): Score[] {
