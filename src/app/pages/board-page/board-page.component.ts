@@ -269,7 +269,8 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
 
     // gameover
     if (this.checkCollisions(piece)) {
-      this.completed = true;     
+      this.completed = true;
+      this.stopAudio();
     }
   }
 
@@ -295,7 +296,8 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
     if (this.completed) {
       this.completed = false;
       this.board.forEach((row) => row.fill(0));
-      this.update()
+      this.update();
+      this.playAudio();
     }
   }
 }
