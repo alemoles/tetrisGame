@@ -1,1 +1,8 @@
-<p>score-page works!</p>
+<div class="container">
+  <h1>Scores</h1>
+  <ul>
+    <li *ngFor="let score of scores">
+      {{ score.username }}
+    </li>
+  </ul>
+</div>
