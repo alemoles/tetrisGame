@@ -17,7 +17,10 @@ export class ScorePageComponent {
   }
 
   public updateScores() {
+    this.scoresService.updateScores();
     this._scores = this.scoresService.scores;
+    console.log(this._scores);
+    
   }
 
   get scores(): Score[] {

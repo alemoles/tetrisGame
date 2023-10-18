@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environments } from 'src/environments/environments';
 import { Score } from '../interfaces/score.interface';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ScoresService implements OnInit {
@@ -17,13 +17,21 @@ export class ScoresService implements OnInit {
     }
 
     private loadScores(): void {
-        this.getScores().subscribe(scores => {
-            this._scores = scores.sort((a, b) => b.score - a.score).slice(0, 10);
-        });
+        this.getScores()
+            .pipe(
+                tap(scores => {
+                    console.log(scores);
+                })
+            )
+            .subscribe(scores => {  
+                this._scores = scores.sort((a, b) => b.score - a.score).slice(0, 10);
+                console.log(this._scores);
+            });
     }
 
     public getScores(): Observable<Score[]> {
-        return this.httpClient.get<Score[]>(`${this.baseUrl}/scores`);
+        const url = `${this.baseUrl}/scores`;
+        return this.httpClient.get<Score[]>(url);
     }
 
     public addScore(score: number, name: string): Observable<Score> {
