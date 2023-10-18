@@ -23,6 +23,9 @@ strong {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   z-index: 10;
   text-align: center;
 }
@@ -34,7 +37,7 @@ a {
 a {
   cursor: pointer;
   text-decoration: none;
-  font-size: 68px;
+  font-size: 48px;
   color: white;
 }
 
@@ -44,4 +47,8 @@ a:hover {
 
 a:active {
   color: rgb(191, 191, 191);
+}
+
+i {
+  font-size: 1rem;
 }

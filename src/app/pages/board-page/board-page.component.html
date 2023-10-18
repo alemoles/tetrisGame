@@ -1,8 +1,9 @@
 <h1>Tetris</h1>
 <div>    
     <canvas [ngClass]="{'blur-effect': completed}" #myCanvas width="500" height="400"></canvas>
-    <div class="centered-text" *ngIf="completed">
-        <a href="#">Retry</a>
+    <div class="centered-text" *ngIf="completed" (click)="reset()"  >
+        <a>Retry</a>
+        <i class="pi pi-replay"></i>
     </div>
 </div>
 <strong>Puntuación: <span>{{score}}</span></strong>

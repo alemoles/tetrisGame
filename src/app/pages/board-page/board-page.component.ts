@@ -269,9 +269,7 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
 
     // gameover
     if (this.checkCollisions(piece)) {
-      this.completed = true;
-      // window.alert('Game over !! Sorry');
-      // this.board.forEach((row) => row.fill(0));
+      this.completed = true;     
     }
   }
 
@@ -290,6 +288,14 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
     })
     if (rowsToRemove.length > 0) {
       this.score += 10;
+    }
+  }
+
+  public reset(): void {
+    if (this.completed) {
+      this.completed = false;
+      this.board.forEach((row) => row.fill(0));
+      this.update()
     }
   }
 }
