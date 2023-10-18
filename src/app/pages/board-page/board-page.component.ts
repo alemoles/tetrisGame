@@ -68,6 +68,7 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
   public score: number = 0;
   public board: number[][] = [[]];
   audio = new Audio();
+  public completed: boolean = false;
 
   private subscription: Subscription = new Subscription;
   private blockPattern: CanvasPattern | null = null;
@@ -141,24 +142,26 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
 
   //2. game loop
   update(time: number = 0): void {
-    const deltaTime = time - this.lastTime;
-    this.lastTime = time;
-    this.dropCounter += deltaTime;
-    if (this.dropCounter > 1000) {
-      piece.position.y++;
-      this.dropCounter = 0;
-      if (this.checkCollisions(piece)) {
-        piece.position.y--;
-        this.solidifyPiece(piece);
-        this.removeRows();
+    if (!this.completed) {
+      const deltaTime = time - this.lastTime;
+      this.lastTime = time;
+      this.dropCounter += deltaTime;
+      if (this.dropCounter > 1000) {
+        piece.position.y++;
+        this.dropCounter = 0;
+        if (this.checkCollisions(piece)) {
+          piece.position.y--;
+          this.solidifyPiece(piece);
+          this.removeRows();
+        }
       }
+      this.draw();
+      requestAnimationFrame((time) => this.update(time));
     }
-    this.draw();
-    requestAnimationFrame((time) => this.update(time));
   }
 
   draw(): void {
-    if(!this.blockPattern)return;
+    if (!this.blockPattern) return;
     if (this.context) {
       this.context.fillStyle = '#111';
       this.context.fillRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
@@ -176,7 +179,7 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
       piece.shape.forEach((row, y) => {
         row.forEach((value, x) => {
           if (value) {
-            this.context.fillStyle='red';
+            this.context.fillStyle = 'red';
             // this.context.fillStyle = this.blockPattern as CanvasPattern;
             this.context.fillRect(x + piece.position.x, y + piece.position.y, 1, 1);
           }
@@ -266,8 +269,9 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
 
     // gameover
     if (this.checkCollisions(piece)) {
-      window.alert('Game over !! Sorry');
-      this.board.forEach((row) => row.fill(0));
+      this.completed = true;
+      // window.alert('Game over !! Sorry');
+      // this.board.forEach((row) => row.fill(0));
     }
   }
 
