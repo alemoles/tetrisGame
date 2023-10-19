@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Score } from 'src/app/interfaces/score.interface';
 import { ScoresService } from 'src/app/services/scores.service';
 
@@ -7,24 +7,18 @@ import { ScoresService } from 'src/app/services/scores.service';
   templateUrl: './score-page.component.html',
   styleUrls: ['./score-page.component.css']
 })
-export class ScorePageComponent {
-  private _scores: Score[] = [];
+export class ScorePageComponent implements OnInit {
+  public scores: Score[] = []
 
-  constructor(
-    private scoresService: ScoresService
-  ) {
-    this.updateScores()
-  }
+  constructor(private scoresService: ScoresService) { }
 
-  public updateScores() {
-    this.scoresService.updateScores();
-    this._scores = this.scoresService.scores;
-    console.log(this._scores);
-    
-  }
-
-  get scores(): Score[] {
-    return this._scores;
+  ngOnInit(): void {
+    this.scoresService.getScores()
+      .subscribe(
+        (fetchedScores: Score[]) => {
+          this.scores = fetchedScores;
+        }
+      );
   }
 
 }

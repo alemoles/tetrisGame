@@ -49,10 +49,6 @@ export class ScoresService implements OnInit {
         return true;
     }
 
-    public updateScores() {
-        this.loadScores();
-    }
-
     get scores(): Score[] {
         return [...this._scores];
     }
