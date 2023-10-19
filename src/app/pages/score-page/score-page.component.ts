@@ -21,4 +21,14 @@ export class ScorePageComponent implements OnInit {
       );
   }
 
+  truncateUsername(username: string): string {
+    const maxWords = 2;
+    const splitName = username.split(' ');
+
+    if (splitName.length > maxWords) {
+      return splitName.slice(0, maxWords).join(' ') + '...';
+    }
+    return username;
+  }
+
 }

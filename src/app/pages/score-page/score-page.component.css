@@ -18,3 +18,24 @@ h1 {
 .score-list li {
   font-size: 32px;
 }
+
+.score-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.username {
+  flex: 1; /* allows it to take all available space */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 10px; /* optional: some space before the score */
+}
+
+.score-value {
+  /* ensure it doesn't shrink */
+  flex-shrink: 0;
+  /* you can set a constant width if needed */
+  /* width: 50px; */
+}
