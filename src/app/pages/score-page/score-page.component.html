@@ -1,8 +1,8 @@
 <div class="container">
   <h1>Scores</h1>
   <ul>
-    <li *ngFor="let score of scores">
-      {{ score.username }} {{ score.score }}
+    <li *ngFor="let score of scores; let i = index">
+      {{ i + 1 }} {{ score.username }} {{ score.score }}
     </li>
   </ul>
 </div>
