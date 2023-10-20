@@ -5,20 +5,16 @@ import { Score } from '../interfaces/score.interface';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class ScoresService implements OnInit {
+export class ScoresService {
 
     private baseUrl: string = environments.baseUrl;
     private _scores: Score[] = [];
 
     constructor(private httpClient: HttpClient) { }
 
-    ngOnInit(): void {
-        this.loadScores();
-    }
-
-    private loadScores(): void {
-        this.getScores()            
-            .subscribe(scores => {  
+    public loadScores(): void {
+        this.getScores()
+            .subscribe(scores => {
                 this._scores = scores.sort((a, b) => b.score - a.score).slice(0, 10);
             });
     }

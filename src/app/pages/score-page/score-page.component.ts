@@ -8,17 +8,25 @@ import { ScoresService } from 'src/app/services/scores.service';
   styleUrls: ['./score-page.component.css']
 })
 export class ScorePageComponent implements OnInit {
-  public scores: Score[] = []
+  // public scores: Score[] = []
 
   constructor(private scoresService: ScoresService) { }
 
-  ngOnInit(): void {
-    this.scoresService.getScores()
-      .subscribe(
-        (fetchedScores: Score[]) => {
-          this.scores = fetchedScores;
-        }
-      );
+  // ngOnInit(): void {
+  //   this.scoresService.getScores()
+  //     .subscribe(
+  //       (fetchedScores: Score[]) => {
+  //         this.scores = fetchedScores;
+  //       }
+  //     );
+  // }
+
+  ngOnInit() {
+    this.scoresService.loadScores();
+  }
+
+  get scores(): Score[] {
+    return this.scoresService.scores;
   }
 
   truncateUsername(username: string): string {
