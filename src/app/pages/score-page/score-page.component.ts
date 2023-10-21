@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { Score } from 'src/app/interfaces/score.interface';
 import { ScoresService } from 'src/app/services/scores.service';
 
@@ -8,18 +9,12 @@ import { ScoresService } from 'src/app/services/scores.service';
   styleUrls: ['./score-page.component.css']
 })
 export class ScorePageComponent implements OnInit {
-  // public scores: Score[] = []
 
-  constructor(private scoresService: ScoresService) { }
+  constructor(
+    private scoresService: ScoresService,
+    private router: Router,
+  ) { }
 
-  // ngOnInit(): void {
-  //   this.scoresService.getScores()
-  //     .subscribe(
-  //       (fetchedScores: Score[]) => {
-  //         this.scores = fetchedScores;
-  //       }
-  //     );
-  // }
 
   ngOnInit() {
     this.scoresService.loadScores();
@@ -27,6 +22,13 @@ export class ScorePageComponent implements OnInit {
 
   get scores(): Score[] {
     return this.scoresService.scores;
+  }
+
+  public reset(): void {
+    const navigationExtras: NavigationExtras = {
+      replaceUrl: true
+    };
+    this.router.navigate(['/board'], navigationExtras);
   }
 
   truncateUsername(username: string): string {
