@@ -34,3 +34,36 @@ a:active {
   height: auto;
   margin: 0.5rem;
 }
+
+@keyframes fall {
+  from {
+    transform: translateY(-400%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fall-animation {
+  animation: fall 2s ease-out forwards;
+}
+
+.s-block,
+.t-block,
+.block-square {
+  opacity: 0;
+}
+
+.block-square {
+  animation-delay: 0.5s;
+}
+
+.s-block {
+  animation-delay: 1s;
+}
+
+.t-block {
+  animation-delay: 1.5s;
+}
