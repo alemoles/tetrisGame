@@ -35,17 +35,6 @@ a:active {
   margin: 0.5rem;
 }
 
-@keyframes fall {
-  from {
-    transform: translateY(-400%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
 .fall-animation {
   animation: fall 2s ease-out forwards;
 }
@@ -57,13 +46,40 @@ a:active {
 }
 
 .block-square {
-  animation-delay: 0.5s;
+  animation: fall 2s ease-out 0.5s forwards, jump 2s infinite 3s;
 }
 
 .s-block {
-  animation-delay: 1s;
+  animation: fall 2s ease-out 1s forwards, jump 2s infinite 3.5s;
 }
 
 .t-block {
-  animation-delay: 1.5s;
+  animation: fall 2s ease-out 1.5s forwards, jump 2s infinite 4s;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-400%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes jump {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
 }
