@@ -14,5 +14,23 @@ a:hover {
 }
 
 a:active {
-    color: rgb(191, 191, 191);
+  color: rgb(191, 191, 191);
+}
+
+.image-row {
+  display: flex;
+  justify-content: center;
+}
+
+.image-row img {
+  width: calc(17% - 10px);
+  height: auto;
+  margin: 0.5rem;
+}
+
+.image-row img.s-block,
+.image-row img.t-block {
+  width: calc(22% - 10px);
+  height: auto;
+  margin: 0.5rem;
 }
