@@ -32,13 +32,18 @@ h1 {
 }
 
 .username {
-  flex: 1; /* allows it to take all available space */
+  flex: 1;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding-right: 10px; /* space before the score */
+  padding-right: 10px;
 }
 
 .score-value {
-  flex-shrink: 0; /* ensure it doesn't shrink */
+  flex-shrink: 0;
+}
+
+i {
+  margin-top: 1rem;
+  font-size: 2rem;
 }

@@ -1,14 +1,13 @@
 <div class="container">
   <h1>Scores</h1>
-  <ul class="score-list" >
+  <ul class="score-list">
     <li *ngFor="let score of scores; let i = index" class="score-item">
       <span class="rank">{{ i + 1 }}.</span>
       <span class="username">{{ truncateUsername(score.username) }}</span>
       <span class="score-value">{{ score.score }}</span>
     </li>
   </ul>
-  <div class="centered-text" (click)="reset()"  >
-    <a>Retry</a>
+  <div class="centered-text" (click)="reset()">   
     <i class="pi pi-replay"></i>
-</div>
+  </div>
 </div>
