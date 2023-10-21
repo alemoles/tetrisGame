@@ -1,1 +1,7 @@
-<a routerLink="/board">Star Game</a>
+<a
+  [routerLink]="['/board']"
+  [queryParamsHandling]="'merge'"
+  [replaceUrl]="true"
+>
+  Star Game
+</a>
