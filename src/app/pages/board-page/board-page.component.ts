@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, 
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { CONSTANTS, EVENT_MOVEMENTS } from 'src/app/constants';
 import { CanComponentDeactivate } from 'src/app/guards/can-deactivate.guard';
+import { ScoresService } from 'src/app/services/scores.service';
 
 interface Position {
   x: number;
@@ -81,7 +82,7 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
    </svg>
  `);
 
-  constructor() {
+  constructor(private scoresService: ScoresService) {
     this.canvas = {} as ElementRef<HTMLCanvasElement>;
     this.board = this.createBoard(CONSTANTS.BOARD_WIDTH, CONSTANTS.BOARD_HEIGHT);
   }
@@ -271,6 +272,20 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
     if (this.checkCollisions(piece)) {
       this.completed = true;
       this.stopAudio();
+
+      // Check and add score if eligible
+      if (this.scoresService.canAddScore(this.score)) {
+        // You can replace 'PlayerName' with the actual player's name if you have it.
+        this.scoresService.addScore(this.score, 'PlayerName').subscribe(
+          (newScore) => {
+            // Optionally handle the response here if needed
+          },
+          (error) => {
+            // Handle any errors that occur when trying to post the score
+            console.error('Failed to add score:', error);
+          }
+        );
+      }
     }
   }
 
