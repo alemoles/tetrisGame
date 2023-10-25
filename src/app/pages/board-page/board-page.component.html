@@ -1,19 +1,18 @@
 <h1>Tetris</h1>
 <div>    
-    <canvas [ngClass]="{'blur-effect': completed}" #myCanvas width="500" height="400"></canvas>
+    <canvas [ngClass]="{'blur-effect': completed || true}" #myCanvas width="500" height="400"></canvas>
     <div class="centered-text" *ngIf="completed && !showNameInput" (click)="reset()"  >
         <a>Retry</a>
         <i class="pi pi-replay"></i>
     </div>
     <!-- *ngIf="showNameInput"  -->
     <div 
-    *ngIf="showNameInput"
+    
     class="name-input-modal">
         <div class="modal-content">
           <h2>Game Over!</h2>
-          <p>Enter your name:</p>
           <input [(ngModel)]="playerName" type="text">
-          <button (click)="submitName()">Submit</button>
+          <button (click)="submitName()">Done</button>
         </div>
       </div>
 </div>
