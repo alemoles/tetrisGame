@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
+import { Router } from '@angular/router';
+import { Subscription, fromEvent } from 'rxjs';
+
 import { CONSTANTS, EVENT_MOVEMENTS } from 'src/app/constants';
 import { CanComponentDeactivate } from 'src/app/guards/can-deactivate.guard';
 import { ScoresService } from 'src/app/services/scores.service';
@@ -68,11 +70,14 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
   public lastTime: number = 0;
   public score: number = 0;
   public board: number[][] = [[]];
-  audio = new Audio();
   public completed: boolean = false;
-
+  public playerName: string = '';
+  public showNameInput: boolean = false;
+  
   private subscription: Subscription = new Subscription;
   private blockPattern: CanvasPattern | null = null;
+  private audio = new Audio(); 
+
 
   // SVG Data URL
   private svgDataURL = 'data:image/svg+xml;base64,' + btoa(`
@@ -82,7 +87,11 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
    </svg>
  `);
 
-  constructor(private scoresService: ScoresService) {
+  constructor(
+    private scoresService: ScoresService,
+    private router: Router,
+
+    ) {
     this.canvas = {} as ElementRef<HTMLCanvasElement>;
     this.board = this.createBoard(CONSTANTS.BOARD_WIDTH, CONSTANTS.BOARD_HEIGHT);
   }
@@ -270,22 +279,13 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
 
     // gameover
     if (this.checkCollisions(piece)) {
-      this.completed = true;
       this.stopAudio();
-
+      
       // Check and add score if eligible
       if (this.scoresService.canAddScore(this.score)) {
-        // You can replace 'PlayerName' with the actual player's name if you have it.
-        this.scoresService.addScore(this.score, 'PlayerName').subscribe(
-          (newScore) => {
-            // Optionally handle the response here if needed
-          },
-          (error) => {
-            // Handle any errors that occur when trying to post the score
-            console.error('Failed to add score:', error);
-          }
-        );
+        this.showNameInput = true;
       }
+      this.completed = true;
     }
   }
 
@@ -314,5 +314,24 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
       this.update();
       this.playAudio();
     }
+  }
+
+  submitName() {
+    if (this.playerName.trim() === '') {
+      alert('Please enter your name.');
+      return;
+    }
+
+    this.scoresService.addScore(this.score, this.playerName).subscribe(
+      (newScore) => {
+        this.showNameInput = false;  // Hide the modal
+        // Navigate to the score page. 
+        // Here, I assume you'll use Angular's Router. If so, inject it and use the navigate method.
+        this.router.navigate(['/score-page']);
+      },
+      (error) => {
+        console.error('Failed to add score:', error);
+      }
+    );
   }
 }
