@@ -91,3 +91,18 @@ input[type="text"] {
   font-family: "Arcade In";
   font-size: 1.5rem;
 }
+
+.header-title,
+.score-row {
+  display: flex;
+  justify-content: center;
+}
+
+.header-title > * {
+  margin: 0;
+}
+
+.score-row {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}

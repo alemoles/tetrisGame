@@ -1,4 +1,11 @@
-<h1>Tetris</h1>
+<div class="header-title">
+  <h1>Tetris</h1>
+</div>
+<div class="score-row">
+  <strong>
+    Puntuación: <span>{{ score }}</span>
+  </strong>
+</div>
 <div>
   <canvas
     [ngClass]="{ 'blur-effect': completed || showNameInput }"
@@ -22,6 +29,3 @@
     </div>
   </div>
 </div>
-<strong
-  >Puntuación: <span>{{ score }}</span></strong
->
