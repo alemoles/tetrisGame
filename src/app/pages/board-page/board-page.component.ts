@@ -73,10 +73,10 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
   public completed: boolean = false;
   public playerName: string = '';
   public showNameInput: boolean = false;
-  
+
   private subscription: Subscription = new Subscription;
   private blockPattern: CanvasPattern | null = null;
-  private audio = new Audio(); 
+  private audio = new Audio();
 
 
   // SVG Data URL
@@ -91,7 +91,7 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
     private scoresService: ScoresService,
     private router: Router,
 
-    ) {
+  ) {
     this.canvas = {} as ElementRef<HTMLCanvasElement>;
     this.board = this.createBoard(CONSTANTS.BOARD_WIDTH, CONSTANTS.BOARD_HEIGHT);
   }
@@ -111,6 +111,9 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
   }
 
   canDeactivate(): boolean {
+    if (this.showNameInput) {
+      return true;
+    }
     return window.confirm("Do you really want to leave? Changes may not be saved.");
   }
 
@@ -280,7 +283,7 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
     // gameover
     if (this.checkCollisions(piece)) {
       this.stopAudio();
-      
+
       // Check and add score if eligible
       if (this.scoresService.canAddScore(this.score)) {
         this.showNameInput = true;
@@ -327,7 +330,7 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
         this.showNameInput = false;  // Hide the modal
         // Navigate to the score page. 
         // Here, I assume you'll use Angular's Router. If so, inject it and use the navigate method.
-        this.router.navigate(['/score-page']);
+        this.router.navigate(['/scores']);
       },
       (error) => {
         console.error('Failed to add score:', error);
