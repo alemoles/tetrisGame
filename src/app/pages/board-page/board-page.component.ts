@@ -318,6 +318,9 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
     })
     if (rowsToRemove.length > 0) {
       this.score += 10;
+      if(this.score % 100 === 0 && this.refreshRate > 10){
+        this.refreshRate = this.refreshRate - 100;
+      }
     }
   }
 
