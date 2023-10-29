@@ -246,8 +246,6 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
         break;
       // Rotate piece
       case EVENT_MOVEMENTS.UP:
-        // todo: improve rotate method to large pieces on the right 
-        // side of the board
         const rotated: number[][] = [];
         for (let index = 0; index < piece.shape[0].length; index++) {
           const row: number[] = [];
