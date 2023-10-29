@@ -89,6 +89,7 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
   private subscription: Subscription = new Subscription;
   private blockPattern: CanvasPattern | null = null;
   private audio = new Audio();
+  private refreshRate = 1000;
 
 
   // SVG Data URL
@@ -171,7 +172,7 @@ export class BoardPageComponent implements AfterViewInit, OnInit, CanComponentDe
       const deltaTime = time - this.lastTime;
       this.lastTime = time;
       this.dropCounter += deltaTime;
-      if (this.dropCounter > 1000) {
+      if (this.dropCounter > this.refreshRate) {
         piece.position.y++;
         this.dropCounter = 0;
         if (this.checkCollisions(piece)) {
